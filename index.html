@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercadeo Racional — Ingeniería y marketing, bajo un mismo techo</title>
+<meta name="description" content="Mercadeo Racional une ingeniería de software y marketing en un solo equipo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0A0C;--sf:#141419;--br:#26262E;
+  --tx:#ECECEF;--mu:#A1A1AA;
+  --v:#8B5CF6;--vb:#A78BFA;--vd:#4C1D95;
+  --fd:'Space Grotesk',system-ui,sans-serif;
+  --fb:'Inter',system-ui,sans-serif;
+  --mw:1200px;--r:12px
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--fb);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+h1,h2,h3,h4{font-family:var(--fd);font-weight:700;line-height:1.1;text-wrap:balance}
+p{color:var(--mu);line-height:1.75;text-wrap:pretty}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--fb);cursor:pointer}
+
+[data-lang="en"] .es{display:none !important}
+[data-lang="es"] .en{display:none !important}
+
+/* Utils */
+.w{max-width:var(--mw);margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.lbl{display:block;font-size:.69rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--v);margin-bottom:14px}
+.gt{background:linear-gradient(115deg,var(--vb) 0%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.24s}
+.rv.d3{transition-delay:.36s}.rv.d4{transition-delay:.48s}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1 !important;transform:none !important;transition:none !important}
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 0;border-bottom:1px solid transparent;transition:background .4s,border-color .4s,padding .4s}
+nav.stuck{background:rgba(20,20,25,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-color:var(--br);padding:13px 0}
+.ni{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.wm{font-family:var(--fd);font-weight:600;font-size:.95rem;letter-spacing:-.02em;white-space:nowrap}
+.nl{display:flex;align-items:center;gap:28px}
+.nl a{color:var(--mu);font-size:.84rem;font-weight:500;transition:color .2s}
+.nl a:hover{color:var(--tx)}
+.nr{display:flex;align-items:center;gap:12px}
+.lbtn{background:none;border:1px solid var(--br);color:var(--mu);font-size:.74rem;font-weight:700;letter-spacing:.08em;padding:7px 12px;border-radius:6px;transition:border-color .2s,color .2s}
+.lbtn:hover{border-color:var(--v);color:var(--tx)}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--v);color:#fff;font-size:.84rem;font-weight:500;padding:10px 20px;border-radius:8px;border:none;transition:background .22s,box-shadow .22s,transform .15s;white-space:nowrap}
+.btn:hover{background:var(--vb);box-shadow:0 0 28px rgba(139,92,246,.45);transform:translateY(-1px)}
+.btn.lg{font-size:1rem;padding:14px 32px;border-radius:10px}
+.ghost{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--mu);font-size:.875rem;font-weight:500;transition:color .2s;padding:0;cursor:pointer}
+.ghost:hover{color:var(--tx)}
+.ghost .ar{display:inline-block;transition:transform .2s}
+.ghost:hover .ar{transform:translateX(3px)}
+@media(max-width:900px){.nl{display:none}}
+@media(max-width:480px){.btn{font-size:.78rem;padding:9px 14px}.wm{font-size:.85rem}}
+
+/* Hero */
+.hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;padding:130px 0 100px}
+.hbg{position:absolute;inset:0;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
+.o1{width:800px;height:800px;background:radial-gradient(circle,rgba(139,92,246,.14) 0%,transparent 65%);top:-260px;left:-220px;animation:orb1 13s ease-in-out infinite alternate}
+.o2{width:620px;height:620px;background:radial-gradient(circle,rgba(76,29,149,.17) 0%,transparent 65%);bottom:-160px;right:-110px;animation:orb2 17s ease-in-out infinite alternate}
+.o3{width:340px;height:340px;background:radial-gradient(circle,rgba(167,139,250,.08) 0%,transparent 65%);top:45%;left:60%;animation:orb3 11s ease-in-out infinite alternate}
+@keyframes orb1{from{transform:translate(0,0) scale(1)}to{transform:translate(130px,90px) scale(1.1)}}
+@keyframes orb2{from{transform:translate(0,0)}to{transform:translate(-100px,-75px)}}
+@keyframes orb3{from{transform:translate(0,0)}to{transform:translate(-65px,55px)}}
+.hc{position:relative;z-index:1;max-width:860px}
+.hc > *{animation:up .75s cubic-bezier(.22,1,.36,1) both}
+.eyb{animation-delay:.08s}
+.hc h1{animation-delay:.22s}
+.hsub{animation-delay:.38s}
+.hctas{animation-delay:.52s}
+.htrust{animation-delay:.66s}
+.eyb{display:flex;align-items:center;gap:10px;margin-bottom:28px;font-size:.73rem;font-weight:700;letter-spacing:.17em;text-transform:uppercase;color:var(--vb)}
+.eyb::before{content:'';display:block;width:28px;height:1px;background:var(--v);flex-shrink:0}
+.hc h1{font-size:clamp(2.5rem,5.8vw,5rem);letter-spacing:-.036em;margin-bottom:28px;color:var(--tx);max-width:820px}
+.hsub{font-size:clamp(1rem,2vw,1.14rem);max-width:580px;margin-bottom:44px}
+.hctas{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-bottom:52px}
+.htrust{display:flex;align-items:center;gap:10px;font-size:.76rem;color:rgba(161,161,170,.58)}
+.htrust::before{content:'';display:block;width:20px;height:1px;background:var(--br);flex-shrink:0}
+
+/* Sections */
+.sec{padding:110px 0}
+.alt{background:var(--sf)}
+.shi{margin-bottom:52px}
+.shi h2{font-size:clamp(1.9rem,3.8vw,3rem);letter-spacing:-.03em;color:var(--tx);margin-bottom:18px;max-width:620px}
+.shi p{font-size:1.05rem;max-width:600px}
+
+/* Edge pillars */
+.pillars{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;background:rgba(139,92,246,.04);border:1px solid var(--br);border-radius:14px;overflow:hidden;margin-bottom:48px}
+@media(max-width:600px){.pillars{display:none}}
+.pil{padding:30px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.pil-ic{width:40px;height:40px;background:rgba(139,92,246,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pil-lbl{font-size:.67rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--v)}
+.pil h4{font-size:1rem;font-weight:600;color:var(--tx)}
+.pil p{font-size:.8rem;max-width:160px}
+.bridge{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;border-left:1px solid var(--br);border-right:1px solid var(--br);background:rgba(139,92,246,.05);gap:6px}
+.bd{width:8px;height:8px;border-radius:50%;background:var(--v);flex-shrink:0}
+.bline{flex:1;width:1px;background:linear-gradient(180deg,var(--v),var(--vd));min-height:16px}
+
+/* Three grid */
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:880px){.tg{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tg{grid-template-columns:1fr}}
+
+/* Card */
+.card{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:28px 24px;transition:border-color .25s,box-shadow .25s,transform .22s}
+.alt .card{background:rgba(10,10,12,.55)}
+.card:hover{border-color:rgba(139,92,246,.35);box-shadow:0 0 28px rgba(139,92,246,.07);transform:translateY(-2px)}
+.ci{width:34px;height:34px;background:rgba(139,92,246,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.card h4{font-size:.975rem;font-weight:600;color:var(--tx);margin-bottom:8px}
+.card p{font-size:.875rem}
+
+/* Service grid */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+@media(max-width:900px){.sg{grid-template-columns:1fr;gap:40px}}
+.sl h2{font-size:clamp(1.9rem,3.8vw,3rem);letter-spacing:-.03em;color:var(--tx);margin-bottom:18px}
+.sl p{font-size:1.05rem;max-width:540px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
+.tag{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);color:var(--vb);font-size:.73rem;font-weight:500;padding:5px 13px;border-radius:100px}
+
+/* Tiers */
+.tiers{display:flex;flex-direction:column;gap:8px}
+.tier{border:1px solid var(--br);border-radius:var(--r);padding:22px 24px;position:relative;overflow:hidden;background:var(--sf);transition:border-color .22s}
+.alt .tier{background:var(--bg)}
+.tier::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--v),var(--vd));opacity:0;transition:opacity .22s}
+.tier:hover{border-color:rgba(139,92,246,.3)}
+.tier:hover::before{opacity:1}
+.tn{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--v);margin-bottom:5px}
+.tier h4{font-size:.975rem;font-weight:600;color:var(--tx);margin-bottom:6px}
+.tier p{font-size:.875rem}
+
+/* Work */
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
+@media(max-width:768px){.wg{grid-template-columns:1fr}}
+.wc{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:12px;transition:border-color .25s,box-shadow .25s,transform .22s}
+.alt .wc{background:var(--bg)}
+.wc.s2{grid-column:span 2}
+@media(max-width:768px){.wc.s2{grid-column:span 1}}
+.wc:hover{border-color:rgba(139,92,246,.38);box-shadow:0 0 32px rgba(139,92,246,.06);transform:translateY(-3px)}
+.wn{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--tx)}
+.wd{font-size:.875rem;flex-grow:1;line-height:1.65}
+.wt{font-size:.72rem;color:rgba(161,161,170,.5);font-family:ui-monospace,'Fira Code',monospace;line-height:1.5}
+.wls{display:flex;gap:16px;flex-wrap:wrap}
+.wl{display:inline-flex;align-items:center;gap:4px;font-size:.79rem;font-weight:500;color:var(--vb);transition:color .2s}
+.wl:hover{color:#fff}
+
+/* CTA */
+.ctaw{position:relative;overflow:hidden;padding:120px 0;text-align:center}
+.ctag{position:absolute;width:700px;height:500px;background:radial-gradient(ellipse,rgba(139,92,246,.11) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.ctaw .w{position:relative;z-index:1}
+.ctaw h2{font-size:clamp(2rem,5vw,4rem);letter-spacing:-.035em;color:var(--tx);margin:0 auto 20px;max-width:720px}
+.ctaw p{font-size:1.1rem;max-width:440px;margin:0 auto 40px}
+
+/* Footer */
+footer{border-top:1px solid var(--br);padding:56px 0 32px}
+.fg{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:48px}
+@media(max-width:768px){.fg{grid-template-columns:1fr;gap:36px}}
+.fb p{font-size:.82rem;margin-top:12px;max-width:220px}
+.fc h5{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(161,161,170,.4);margin-bottom:18px}
+.fc ul{display:flex;flex-direction:column;gap:12px}
+.fc a{color:var(--mu);font-size:.875rem;transition:color .2s;display:block}
+.fc a:hover{color:var(--tx)}
+.feml{color:var(--vb);font-size:.875rem;transition:color .2s;display:inline-block}
+.feml:hover{color:#fff}
+.fbot{margin-top:48px;padding-top:24px;border-top:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.fbot p{font-size:.72rem;color:rgba(161,161,170,.35)}
+.fbot a{color:rgba(161,161,170,.35);transition:color .2s}
+.fbot a:hover{color:var(--mu)}
+.fbr{display:flex;align-items:center;gap:14px}
+
+/* Split slider */
+.split-slider{position:relative;border-radius:14px;overflow:hidden;height:264px;cursor:col-resize;user-select:none;-webkit-user-select:none;border:1px solid var(--br);margin-bottom:48px}
+.ss-eng,.ss-mkt{position:absolute;inset:0}
+.ss-eng{background:radial-gradient(ellipse at 25% 50%,rgba(99,102,241,.32) 0%,#080812 68%);clip-path:inset(0 50% 0 0)}
+.ss-mkt{background:radial-gradient(ellipse at 75% 50%,rgba(180,83,9,.28) 0%,#0a0805 68%);clip-path:inset(0 0 0 50%)}
+.ss-blurb{position:absolute;top:0;bottom:0;width:50%;display:flex;flex-direction:column;justify-content:center;padding:24px 32px}
+.ss-eng .ss-blurb{left:0}
+.ss-mkt .ss-blurb{right:0;text-align:right;align-items:flex-end}
+.ss-lbl{font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:12px}
+.ss-eng .ss-lbl{color:#818cf8}
+.ss-mkt .ss-lbl{color:#fb923c}
+.ss-blurb h3{font-family:var(--fd);font-size:1.7rem;font-weight:600;color:var(--tx);line-height:1.13;margin-bottom:13px;max-width:255px;letter-spacing:-.02em}
+.ss-sub{font-size:.9rem;color:var(--mu);line-height:1.58;margin-bottom:16px;max-width:300px}
+.ss-cue{font-size:.7rem;color:rgba(255,255,255,.46);letter-spacing:.02em;font-weight:600}
+.ss-words{position:absolute;top:0;bottom:0;width:34%;display:flex;flex-wrap:wrap;align-content:center;gap:7px;padding:22px 26px}
+.ss-eng .ss-words{left:50%;justify-content:flex-start}
+.ss-mkt .ss-words{right:50%;justify-content:flex-end}
+.ss-word{font-size:.74rem;font-weight:600;padding:6px 13px;border-radius:100px;white-space:nowrap;opacity:0;transform:translateY(16px) scale(.88);transition:opacity .4s ease,transform .5s cubic-bezier(.34,1.56,.64,1)}
+.ss-eng .ss-word{background:rgba(99,102,241,.18);color:#c7d2fe;border:1px solid rgba(99,102,241,.32)}
+.ss-mkt .ss-word{background:rgba(234,88,12,.16);color:#fed7aa;border:1px solid rgba(234,88,12,.3)}
+.ss-words.in .ss-word{opacity:1;transform:none}
+.ss-words.in .ss-word:nth-child(1){transition-delay:0s}
+.ss-words.in .ss-word:nth-child(2){transition-delay:.045s}
+.ss-words.in .ss-word:nth-child(3){transition-delay:.09s}
+.ss-words.in .ss-word:nth-child(4){transition-delay:.135s}
+.ss-words.in .ss-word:nth-child(5){transition-delay:.18s}
+.ss-words.in .ss-word:nth-child(6){transition-delay:.225s}
+.ss-words.in .ss-word:nth-child(7){transition-delay:.27s}
+.ss-words.in .ss-word:nth-child(8){transition-delay:.315s}
+.ss-words.in .ss-word:nth-child(9){transition-delay:.36s}
+.ss-words.in .ss-word:nth-child(10){transition-delay:.405s}
+.ss-div{position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,.18);transform:translateX(-50%);z-index:5;pointer-events:none}
+.ss-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:rgba(20,20,28,.92);border:1.5px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:6;pointer-events:none;box-shadow:0 2px 14px rgba(0,0,0,.5)}
+.ss-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:.6rem;color:rgba(255,255,255,.28);white-space:nowrap;pointer-events:none;z-index:7;letter-spacing:.06em}
+@media(max-width:600px){.split-slider{display:none}}
+
+/* Flip cards */
+.flip-wrap{perspective:900px;height:224px;cursor:pointer;outline:none}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.flip-wrap.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:8px}
+.flip-front{background:var(--sf);border:1px solid var(--br);transition:border-color .25s,box-shadow .25s}
+.alt .flip-front{background:rgba(10,10,12,.55)}
+.flip-wrap:hover .flip-front{border-color:rgba(139,92,246,.35);box-shadow:0 0 24px rgba(139,92,246,.08)}
+.flip-back{background:linear-gradient(140deg,#5b21b6 0%,#3b0764 100%);border:1px solid rgba(139,92,246,.4);transform:rotateY(180deg);justify-content:space-between}
+.flip-back h4{font-size:.95rem;font-weight:600;color:#fff;font-family:var(--fd);line-height:1.2}
+.flip-back p{font-size:.81rem;color:rgba(255,255,255,.8);line-height:1.65}
+.flip-hint{font-size:.63rem;letter-spacing:.03em;color:rgba(161,161,170,.38);margin-top:auto}
+.flip-back .flip-hint{color:rgba(255,255,255,.4)}
+
+/* Expandable tiers */
+.tier-btn{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;background:none;border:none;text-align:left;width:100%;padding:0;cursor:pointer;color:inherit;font-family:inherit}
+.tier-btn-text{flex:1}
+.tier-chev{flex-shrink:0;color:var(--v);margin-top:3px;transition:transform .3s ease;line-height:0}
+.tier.open .tier-chev{transform:rotate(180deg)}
+.tier-short{font-size:.875rem;color:var(--mu);margin-top:6px;line-height:1.65}
+.tier-expand{overflow:hidden;max-height:0;opacity:0;transition:max-height .4s ease,opacity .35s ease}
+.tier.open .tier-expand{max-height:180px;opacity:1}
+.tier-detail{font-size:.8rem;color:var(--mu);line-height:1.7;padding-top:12px;border-top:1px solid var(--br);margin-top:4px}
+
+/* Edge section ambient animation */
+#edge{position:relative;overflow:hidden}
+#edge::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.065) 0%,transparent 55%);top:-200px;right:-80px;animation:edgeDrift 16s ease-in-out infinite alternate;pointer-events:none;z-index:0}
+#edge::after{content:'';position:absolute;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.04) 0%,transparent 60%);bottom:-60px;left:5%;animation:edgeDrift2 11s ease-in-out infinite alternate;pointer-events:none;z-index:0}
+#edge .w{position:relative;z-index:1}
+@keyframes edgeDrift{from{transform:translate(0,0) scale(1)}to{transform:translate(-70px,55px) scale(1.08)}}
+@keyframes edgeDrift2{from{transform:translate(0,0)}to{transform:translate(36px,-28px)}}
+#edge .ci svg{animation:iconPulse 5s ease-in-out infinite}
+@keyframes iconPulse{0%,100%{filter:drop-shadow(0 0 0 rgba(167,139,250,0))}50%{filter:drop-shadow(0 0 5px rgba(167,139,250,.4))}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" role="banner">
+  <div class="w">
+    <div class="ni">
+      <a href="#" class="logo" aria-label="Mercadeo Racional">
+        <svg id="logoSvg" width="34" height="30" viewBox="0 0 34 30" fill="none" aria-hidden="true" focusable="false"><defs><linearGradient id="lg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs><rect x="2" y="0" width="30" height="30" rx="8" fill="url(#lg0)"/><path d="M10 22 L10 9 L17 17 L24 9 L24 22" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" data-comment-anchor="066e9df4c4-path"/></svg>
+        <span class="wm">Mercadeo Racional</span>
+      </a>
+      <div class="nl" role="navigation" aria-label="Main navigation">
+        <a href="#edge"><span class="es">Ventaja</span><span class="en" data-comment-anchor="629fc5082f-span">Why Us</span></a>
+        <a href="#software">Software</a>
+        <a href="#marketing">Marketing</a>
+        <a href="#work"><span class="es">Trabajo</span><span class="en">Work</span></a>
+        <a href="#team"><span class="es">Equipo</span><span class="en">Team</span></a>
+      </div>
+      <div class="nr">
+        <button class="lbtn" id="langBtn" aria-label="Switch to English">
+          <span class="es">EN</span>
+          <span class="en">ES</span>
+        </button>
+        <a href="https://calendly.com/jmartinez-mercadeoracional/15-minute-chat" class="btn" target="_blank" rel="noopener">
+          <span class="es">Agenda una llamada</span>
+          <span class="en">Book a call</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="hero" aria-label="Hero">
+  <div class="hbg" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+  <div class="w">
+    <div class="hc">
+      <p class="eyb">
+        <span class="es">Donde el código y el crecimiento convergen.</span>
+        <span class="en" data-comment-anchor="d94336d625-span">Where code meets conversion.</span>
+      </p>
+      <h1>
+        <span class="es">Construimos tu <span class="gt">software.</span> Y construimos tu <span class="gt">crecimiento.</span></span>
+        <span class="en">We build your <span class="gt">software.</span> And we build your <span class="gt">growth.</span></span>
+      </h1>
+      <p class="hsub">
+        <span class="es">Mercadeo Racional une ingeniería de software y marketing en un solo equipo. Desde un proyecto puntual hasta tu CTO o CMO de confianza, con un equipo experto incluido.</span>
+        <span class="en">Mercadeo Racional unites software engineering and marketing in one team. From a single project to your trusted CTO or CMO, with an expert team included.</span>
+      </p>
+      <div class="hctas">
+        <a href="https://calendly.com/jmartinez-mercadeoracional/15-minute-chat" class="btn lg" target="_blank" rel="noopener">
+          <span class="es">Agenda una llamada</span>
+          <span class="en">Book a call</span>
+        </a>
+        <a href="#work" class="ghost">
+          <span class="es">Ver el trabajo</span>
+          <span class="en">See the work</span>
+          <span class="ar">&#8594;</span>
+        </a>
+      </div>
+      <p class="htrust">
+        <span class="es">Construido por ingenieros con experiencia en empresas como Citi y Centene.</span>
+        <span class="en">Built by engineers with experience at companies like Citi and Centene.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EDGE -->
+<section class="sec" id="edge" data-screen-label="La Ventaja / The Edge" data-comment-anchor="15230b656a-section">
+  <div class="w">
+    <span class="lbl rv"><span class="es">Por qué nosotros</span><span class="en" data-comment-anchor="6396f310ed-span">Why Us</span></span>
+    <div class="shi rv d1" data-comment-anchor="78bc7488eb-div">
+      <h2><span class="es">Por qué un solo equipo supera a dos proveedores separados.</span><span class="en">Why one integrated team beats two separate vendors.</span></h2>
+      <p><span class="es">La mayoría de las empresas contratan una firma para tecnología y otra para marketing. El resultado: dos equipos que no se entienden, estrategias que se contradicen y tú coordinando a todos. Nosotros hacemos las dos cosas como un solo equipo — la tecnología que construimos entiende cómo vas a crecer, y el marketing que diseñamos entiende lo que fue construido.</span><span class="en">Most companies hire one firm for technology and another for marketing. The result: two teams that don't understand each other, conflicting strategies, and you stuck coordinating everyone. We do both as one integrated team — the technology we build understands how you will grow, and the marketing we design understands what was built.</span></p>
+    </div>
+
+    <!-- Engineering / Marketing interactive slider -->
+    <div class="split-slider rv d2" data-comment-anchor="8e87093c7c-div" role="img" aria-label="Engineering and Marketing showcase — drag to explore">
+      <div class="ss-eng" data-comment-anchor="47e5741ffd-div">
+        <div class="ss-blurb" data-comment-anchor="bc832f1e1d-div">
+          <span class="ss-lbl es">Ingeniería</span>
+          <span class="ss-lbl en">Engineering</span>
+          <h3 class="es">Diseñamos, construimos y desplegamos.</h3>
+          <h3 class="en">We design, build, and ship.</h3>
+          <p class="ss-sub es">Aplicaciones web, integraciones y automatizaciones — probadas de extremo a extremo y desplegadas en producción.</p>
+          <p class="ss-sub en">Web apps, integrations, and automations — tested end to end and shipped to production.</p>
+          <span class="ss-cue es">Desliza para ver nuestro stack →</span>
+          <span class="ss-cue en">Slide to reveal our stack →</span>
+        </div>
+        <div class="ss-words" aria-hidden="true">
+          <span class="ss-word">Web Apps</span>
+          <span class="ss-word">APIs & Integrations</span>
+          <span class="ss-word">Automation</span>
+          <span class="ss-word">E-commerce</span>
+          <span class="ss-word">Databases</span>
+          <span class="ss-word">Cloud Deploy</span>
+          <span class="ss-word">QA & Testing</span>
+          <span class="ss-word">SaaS Products</span>
+          <span class="ss-word">Data Pipelines</span>
+          <span class="ss-word">Tech Strategy</span>
+        </div>
+      </div>
+      <div class="ss-mkt">
+        <div class="ss-words" aria-hidden="true">
+          <span class="ss-word">Brand Strategy</span>
+          <span class="ss-word">SEO & SEM</span>
+          <span class="ss-word">Paid Ads</span>
+          <span class="ss-word">Content Creation</span>
+          <span class="ss-word">Social Media</span>
+          <span class="ss-word">Email Marketing</span>
+          <span class="ss-word">Analytics</span>
+          <span class="ss-word">Print Design</span>
+          <span class="ss-word">Video Content</span>
+          <span class="ss-word">Market Research</span>
+        </div>
+        <div class="ss-blurb">
+          <span class="ss-lbl es">Marketing</span>
+          <span class="ss-lbl en">Marketing</span>
+          <h3 class="es">Atraemos, convertimos y retenemos.</h3>
+          <h3 class="en">We attract, convert, and retain.</h3>
+          <p class="ss-sub es">Marca, campañas, contenido y analítica — medidos contra objetivos de negocio reales.</p>
+          <p class="ss-sub en">Brand, campaigns, content, and analytics — measured against real business goals.</p>
+          <span class="ss-cue es">← Desliza para ver las herramientas</span>
+          <span class="ss-cue en">← Slide to reveal our tools</span>
+        </div>
+      </div>
+      <div class="ss-div" aria-hidden="true"></div>
+      <div class="ss-knob" aria-hidden="true">
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+          <path d="M1 5 L5 2 M1 5 L5 8" stroke="rgba(255,255,255,.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15 5 L11 2 M15 5 L11 8" stroke="rgba(255,255,255,.65)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ss-hint es">← arrastra para explorar →</span>
+      <span class="ss-hint en">← drag to explore →</span>
+    </div>
+
+    <div class="tg">
+      <div class="flip-wrap rv d2" data-comment-anchor="51e47d16c2-div" tabindex="0" role="button" aria-label="One strategy — tap to flip">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="ci" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 3 L15 9 L9 15 L3 9 Z" stroke="#A78BFA" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4><span class="es">Una sola estrategia</span><span class="en">One strategy</span></h4>
+            <p><span class="es">Tecnología y marketing planificados juntos, no a pedazos.</span><span class="en">Technology and marketing planned together, not in pieces.</span></p>
+            <span class="flip-hint es">Toca para saber más ↩</span>
+            <span class="flip-hint en">Tap to learn more ↩</span>
+          </div>
+          <div class="flip-back">
+            <h4><span class="es">Cómo funciona</span><span class="en">How it works</span></h4>
+            <p><span class="es">Planificamos el roadmap técnico y la estrategia de marketing en la misma sala. Lo que construimos sirve directamente a cómo creces — sin capa de traducción ni re-explicaciones entre equipos.</span><span class="en">We plan the technical roadmap and the marketing strategy in the same room. What we build directly supports how you grow — no translation layer, no re-explaining between teams.</span></p>
+            <span class="flip-hint es">↩ Volver</span><span class="flip-hint en">↩ Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="flip-wrap rv d3" tabindex="0" role="button" aria-label="Less coordination — tap to flip">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="ci" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="4" cy="9" r="2.5" stroke="#A78BFA" stroke-width="1.5"/>
+                <circle cx="14" cy="9" r="2.5" stroke="#A78BFA" stroke-width="1.5"/>
+                <line x1="6.5" y1="9" x2="11.5" y2="9" stroke="#A78BFA" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h4><span class="es">Menos coordinacion para ti</span><span class="en">Less coordination for you</span></h4>
+            <p><span class="es">Un solo punto de contacto en lugar de varios proveedores.</span><span class="en">A single point of contact instead of several vendors.</span></p>
+            <span class="flip-hint es">Toca para saber más ↩</span>
+            <span class="flip-hint en">Tap to learn more ↩</span>
+          </div>
+          <div class="flip-back">
+            <h4><span class="es">Cómo funciona</span><span class="en">How it works</span></h4>
+            <p><span class="es">Una llamada semanal cubre avances en ingeniería y rendimiento de marketing. Una factura. Un punto de contacto que entiende ambos lados de tu negocio — sin juego de teléfono roto.</span><span class="en">One weekly call covers engineering progress and marketing performance. One invoice. One point of contact who understands both sides of your business — no broken telephone.</span></p>
+            <span class="flip-hint es">↩ Volver</span><span class="flip-hint en">↩ Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="flip-wrap rv d4" tabindex="0" role="button" aria-label="Built to convert — tap to flip">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="ci" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 15 L9 5" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M5 9 L9 5 L13 9" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4><span class="es">Construido para convertir</span><span class="en">Built to convert</span></h4>
+            <p><span class="es">Cada decision tecnica piensa en el cliente final.</span><span class="en">Every technical decision keeps the end customer in mind.</span></p>
+            <span class="flip-hint es">Toca para saber más ↩</span>
+            <span class="flip-hint en">Tap to learn more ↩</span>
+          </div>
+          <div class="flip-back">
+            <h4><span class="es">Cómo funciona</span><span class="en">How it works</span></h4>
+            <p><span class="es">Cada función considera el journey del cliente. Landing pages, formularios, analítica y pruebas A/B — integrados en el producto desde el inicio, no añadidos como un parche después del lanzamiento.</span><span class="en">Every feature considers the customer journey. Landing pages, forms, analytics, and A/B testing — baked into the product from day one, not bolted on as an afterthought post-launch.</span></p>
+            <span class="flip-hint es">↩ Volver</span><span class="flip-hint en">↩ Back</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOFTWARE ENGINEERING -->
+<section class="sec alt" id="software" data-screen-label="Software Engineering">
+  <div class="w">
+    <span class="lbl rv"><span class="es">Ingeniería de software</span><span class="en">Software engineering</span></span>
+    <div class="sg">
+      <div class="sl rv d1">
+        <h2><span class="es">Desde un proyecto hasta tu CTO, con equipo incluido.</span><span class="en">From a single project to your CTO, team included.</span></h2>
+        <p><span class="es">Construimos productos nuevos, automatizamos procesos que hoy te quitan horas, e integramos lo que ya tienes. Puedes contratarnos para un proyecto puntual, para un equipo de producto continuo, o como tu liderazgo tecnico embebido con un equipo senior detras.</span><span class="en">We build new products, automate the processes that drain your hours today, and integrate what you already have. Hire us for a single project, for an ongoing product team, or as your embedded technical leadership with a senior team behind it.</span></p>
+        <div class="tags">
+          <span class="tag es">Desarrollo full stack</span>
+          <span class="tag es">Automatizacion</span>
+          <span class="tag es">Integraciones</span>
+          <span class="tag es">Aplicaciones web</span>
+          <span class="tag es">Bases de datos</span>
+          <span class="tag es">Pruebas automatizadas</span>
+          <span class="tag en">Full stack development</span>
+          <span class="tag en">Automation</span>
+          <span class="tag en">Integrations</span>
+          <span class="tag en">Web applications</span>
+          <span class="tag en">Databases</span>
+          <span class="tag en">Automated testing</span>
+        </div>
+      </div>
+      <div class="tiers rv d2">
+        <div class="tier" data-comment-anchor="0131e002b5-div">
+          <button class="tier-btn" aria-expanded="false">
+            <div class="tier-btn-text">
+              <p class="tn">01</p>
+              <h4><span class="es">Proyecto</span><span class="en">Project</span></h4>
+            </div>
+            <div class="tier-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5 L7 9 L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <p class="tier-short"><span class="es">Un producto, una integracion, o una automatizacion, entregada y funcionando.</span><span class="en">A product, an integration, or an automation, delivered and working.</span></p>
+          <div class="tier-expand"><p class="tier-detail"><span class="es">Definimos el alcance juntos, acordamos una entrega concreta y lo construimos. Recibes un producto probado y desplegado, no un repositorio con instrucciones. Plazo típico: 4–12 semanas.</span><span class="en">We scope the work together, agree on a concrete delivery, and build it. You get a tested, deployed product — not a repo with instructions. Typical timeline: 4–12 weeks.</span></p></div>
+        </div>
+        <div class="tier">
+          <button class="tier-btn" aria-expanded="false">
+            <div class="tier-btn-text">
+              <p class="tn">02</p>
+              <h4><span class="es">Equipo de producto</span><span class="en">Product team</span></h4>
+            </div>
+            <div class="tier-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5 L7 9 L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <p class="tier-short"><span class="es">Un equipo dedicado que construye y mantiene tu plataforma de forma continua.</span><span class="en">A dedicated team that builds and maintains your platform on an ongoing basis.</span></p>
+          <div class="tier-expand"><p class="tier-detail"><span class="es">Un equipo de 2–4 ingenieros que hace entregas cada semana. Demo semanal, backlog compartido e ingenieros que conocen tu sistema tan bien como tú.</span><span class="en">A 2–4 engineer squad that ships every week. Weekly demo, shared backlog, and engineers who know your system as well as you do.</span></p></div>
+        </div>
+        <div class="tier">
+          <button class="tier-btn" aria-expanded="false">
+            <div class="tier-btn-text">
+              <p class="tn">03</p>
+              <h4><span class="es">CTO embebido</span><span class="en">Embedded CTO</span></h4>
+            </div>
+            <div class="tier-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5 L7 9 L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <p class="tier-short"><span class="es">Liderazgo tecnico que dirige tu tecnologia y trae a su propio equipo.</span><span class="en">Technical leadership that runs your technology and brings its own team.</span></p>
+          <div class="tier-expand"><p class="tier-detail"><span class="es">Tu CTO embebido define la dirección técnica, revisa la arquitectura y asiste a tus reuniones de liderazgo. Trae su propio equipo senior verificado — sin procesos de reclutamiento.</span><span class="en">Your embedded CTO sets technical direction, reviews architecture, and joins your leadership meetings. They bring their own vetted senior team — no recruiting process needed.</span></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETING -->
+<section class="sec" id="marketing" data-screen-label="Marketing">
+  <div class="w">
+    <span class="lbl rv"><span class="es">Marketing</span><span class="en">Marketing</span></span>
+    <div class="sg">
+      <div class="sl rv d1">
+        <h2><span class="es">Desde una campana hasta tu CMO, con departamento incluido.</span><span class="en">From a single campaign to your CMO, department included.</span></h2>
+        <p><span class="es">Atraemos y convertimos clientes con marketing digital e impreso. Puedes contratarnos para una campana puntual, para marketing continuo, o como tu liderazgo de marketing embebido con un departamento completo detras.</span><span class="en">We attract and convert customers with digital and print marketing. Hire us for a single campaign, for ongoing marketing, or as your embedded marketing leadership with a full department behind it.</span></p>
+        <div class="tags">
+          <span class="tag es">Estrategia de marca</span>
+          <span class="tag es">Marketing digital</span>
+          <span class="tag es">Diseno impreso</span>
+          <span class="tag es">Contenido</span>
+          <span class="tag es">Campanas</span>
+          <span class="tag es">Analitica</span>
+          <span class="tag en">Brand strategy</span>
+          <span class="tag en">Digital marketing</span>
+          <span class="tag en">Print design</span>
+          <span class="tag en">Content</span>
+          <span class="tag en">Campaigns</span>
+          <span class="tag en">Analytics</span>
+        </div>
+      </div>
+      <div class="tiers rv d2">
+        <div class="tier">
+          <button class="tier-btn" aria-expanded="false">
+            <div class="tier-btn-text">
+              <p class="tn">01</p>
+              <h4><span class="es">Campana</span><span class="en">Campaign</span></h4>
+            </div>
+            <div class="tier-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5 L7 9 L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <p class="tier-short"><span class="es">Una campana clara, lanzada y medida.</span><span class="en">One clear campaign, launched and measured.</span></p>
+          <div class="tier-expand"><p class="tier-detail"><span class="es">De la idea al reporte post-lanzamiento: estrategia, creatividad, copy, targeting y medición, todo en uno. Construida alrededor de una meta real, no una lista de entregables.</span><span class="en">From brief to post-launch report: strategy, creative, copy, targeting, and measurement — all in one. Built around a real goal, not a deliverable checklist.</span></p></div>
+        </div>
+        <div class="tier">
+          <button class="tier-btn" aria-expanded="false">
+            <div class="tier-btn-text">
+              <p class="tn">02</p>
+              <h4><span class="es">Marketing continuo</span><span class="en">Ongoing marketing</span></h4>
+            </div>
+            <div class="tier-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5 L7 9 L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <p class="tier-short"><span class="es">Marketing constante que mantiene tu marca creciendo mes a mes.</span><span class="en">Steady marketing that keeps your brand growing month over month.</span></p>
+          <div class="tier-expand"><p class="tier-detail"><span class="es">Contenido, campañas y optimización constante cada mes. Nos hacemos cargo del calendario para que tú no tengas que hacerlo. Reportamos contra tus métricas de negocio reales.</span><span class="en">Consistent content, campaigns, and optimization every month. We own the calendar so you don't have to. Reported against your actual business metrics.</span></p></div>
+        </div>
+        <div class="tier">
+          <button class="tier-btn" aria-expanded="false">
+            <div class="tier-btn-text">
+              <p class="tn">03</p>
+              <h4><span class="es">CMO embebido</span><span class="en">Embedded CMO</span></h4>
+            </div>
+            <div class="tier-chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5 L7 9 L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <p class="tier-short"><span class="es">Liderazgo de marketing que dirige tu estrategia y trae a su propio departamento.</span><span class="en">Marketing leadership that runs your strategy and brings its own department.</span></p>
+          <div class="tier-expand"><p class="tier-detail"><span class="es">Tu CMO embebido dirige la estrategia, gestiona el departamento y se presenta en las reuniones de junta. Trae su propio equipo de creativos y analítica, listos desde el primer día.</span><span class="en">Your embedded CMO runs strategy, manages the department, and shows up to board meetings. They bring their own creative and analytics team — ready from day one.</span></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section class="sec alt" id="work" data-screen-label="Selected Work">
+  <div class="w">
+    <span class="lbl rv"><span class="es">Trabajo seleccionado</span><span class="en">Selected work</span></span>
+    <div class="shi rv d1">
+      <h2><span class="es">Software real, en produccion.</span><span class="en">Real software, in production.</span></h2>
+      <p><span class="es">Una muestra de lo que hemos construido y desplegado.</span><span class="en">A sample of what we have built and shipped.</span></p>
+    </div>
+    <div class="wg">
+
+      <!-- Project 1 -->
+      <div class="wc rv d1">
+        <span class="wn">Facturacion electronica DGII (e-CF)</span>
+        <p class="wd"><span class="es">Plataforma de facturacion electronica para el sistema fiscal dominicano. Construida con un stack moderno y probada de extremo a extremo.</span><span class="en">An electronic invoicing platform for the Dominican fiscal system. Built on a modern stack and tested end to end.</span></p>
+        <p class="wt"><span class="es">Next.js, TypeScript, Supabase, Tailwind, pruebas con Playwright y Vitest</span><span class="en">Next.js, TypeScript, Supabase, Tailwind, Playwright and Vitest testing</span></p>
+        <div class="wls">
+          <a href="https://ecf-dgii.vercel.app" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5 L9.5 1.5 M4.5 1.5 L9.5 1.5 L9.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Ver sitio</span><span class="en">Live site</span>
+          </a>
+          <a href="https://github.com/wan03/ecf-dgii" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M3 9 L1 7 L3 5 M8 9 L10 7 L8 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Código</span><span class="en">Code</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="wc rv d2">
+        <span class="wn"><span class="es">Plataforma inmobiliaria</span><span class="en">Real estate platform</span></span>
+        <p class="wd"><span class="es">Sitio inmobiliario para un agente, con listados y captura de clientes. Desplegado y probado.</span><span class="en">A real estate platform for an agent, with listings and lead capture. Deployed and tested.</span></p>
+        <p class="wt"><span class="es">Next.js, TypeScript, Supabase, pruebas con Playwright</span><span class="en">Next.js, TypeScript, Supabase, Playwright testing</span></p>
+        <div class="wls">
+          <a href="https://luis-perez-real-estate.vercel.app" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5 L9.5 1.5 M4.5 1.5 L9.5 1.5 L9.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Ver sitio</span><span class="en">Live site</span>
+          </a>
+          <a href="https://github.com/wan03/LuisPerezRealEstate" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M3 9 L1 7 L3 5 M8 9 L10 7 L8 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Código</span><span class="en">Code</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="wc rv d1">
+        <span class="wn"><span class="es">Sitio con gestor de contenido</span><span class="en">CMS-powered corporate site</span></span>
+        <p class="wd"><span class="es">Sitio corporativo construido sobre un CMS headless y un sistema de componentes documentado, para que el cliente edite su contenido con facilidad.</span><span class="en">A corporate site built on a headless CMS with a documented component system, so the client can edit content with ease.</span></p>
+        <p class="wt">React, MUI, Sanity CMS, Storybook, TypeScript</p>
+        <div class="wls">
+          <a href="https://github.com/Valiant-Heart-Companions/gunnbrothers" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M3 9 L1 7 L3 5 M8 9 L10 7 L8 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Código</span><span class="en">Code</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="wc rv d2" data-om-id="cb4221c0:312">
+        <span class="wn"><span class="es">Sitio para una organizacion sin fines de lucro</span><span class="en">Nonprofit website</span></span>
+        <p class="wd"><span class="es">Sitio para una organizacion sin fines de lucro, con donaciones integradas, enfoque en accesibilidad y manejo seguro de pagos.</span><span class="en">A website for a nonprofit organization, with integrated donations, an accessibility focus, and secure payment handling.</span></p>
+        <p class="wt"><span class="es">Astro, Tailwind, TypeScript, integracion de donaciones y politica de seguridad de contenido (CSP)</span><span class="en">Astro, Tailwind, TypeScript, donation integration and Content Security Policy</span></p>
+        <div class="wls">
+          <a href="https://vhcompanions.org/" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5 L9.5 1.5 M4.5 1.5 L9.5 1.5 L9.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Ver sitio</span><span class="en">Live site</span>
+          </a>
+          <a href="https://github.com/Valiant-Heart-Companions/VHCompanionsWebsite" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M3 9 L1 7 L3 5 M8 9 L10 7 L8 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Código</span><span class="en">Code</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 5 (full width) -->
+      <div class="wc s2 rv d1">
+        <span class="wn"><span class="es">Buscador de recursos comunitarios</span><span class="en">Community resource finder</span></span>
+        <p class="wd"><span class="es">Herramienta accesible y ligera que ayuda a personas a encontrar el punto de contacto correcto en su comunidad. Rapida y pensada para moviles.</span><span class="en">An accessible, lightweight tool that helps people find the right point of contact in their community. Fast and built for mobile.</span></p>
+        <p class="wt"><span class="es">HTML, CSS, JavaScript, enfoque en accesibilidad</span><span class="en">HTML, CSS, JavaScript, accessibility focus</span></p>
+        <div class="wls">
+          <a href="https://wan03.github.io/thrf/" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5 L9.5 1.5 M4.5 1.5 L9.5 1.5 L9.5 6.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Ver sitio</span><span class="en">Live site</span>
+          </a>
+          <a href="https://github.com/wan03/thrf" class="wl" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M3 9 L1 7 L3 5 M8 9 L10 7 L8 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="es">Código</span><span class="en">Code</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK / TEAM -->
+<section class="sec" id="team" data-screen-label="How We Work">
+  <div class="w">
+    <span class="lbl rv"><span class="es">Como trabajamos</span><span class="en">How we work</span></span>
+    <div class="shi rv d1">
+      <h2><span class="es">Un equipo senior, reunido para tu proyecto.</span><span class="en">A senior team, assembled for your project.</span></h2>
+      <p><span class="es">Mercadeo Racional trabaja con una red de profesionales senior cuidadosamente seleccionados, con quienes hemos colaborado durante anos. Reunimos al equipo correcto para cada proyecto, y cuando el trabajo lo justifica, incorporamos personal dedicado o compartido. Detras de cada entrega hay experiencia construida en entornos exigentes, incluidas empresas como Citi y Centene.</span><span class="en">Mercadeo Racional works with a carefully vetted network of senior professionals we have collaborated with for years. We assemble the right team for each project, and when the work justifies it, we bring on dedicated or shared staff. Behind every delivery is experience built in demanding environments, including companies like Citi and Centene.</span></p>
+    </div>
+    <div class="tg">
+      <div class="flip-wrap rv d2" data-comment-anchor="ed12b3d12e-div" tabindex="0" role="button" aria-label="Vetted senior network — tap to flip">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="ci" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="6" r="3" stroke="#A78BFA" stroke-width="1.5"/>
+                <path d="M3 16 C3 12.69 5.69 10 9 10 C12.31 10 15 12.69 15 16" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h4><span class="es">Red senior verificada</span><span class="en">Vetted senior network</span></h4>
+            <p><span class="es">Profesionales con los que ya hemos trabajado, no contrataciones de ultimo momento.</span><span class="en">Professionals we have already worked with, not last minute hires.</span></p>
+            <span class="flip-hint es">Toca para saber más ↩</span>
+            <span class="flip-hint en">Tap to learn more ↩</span>
+          </div>
+          <div class="flip-back">
+            <h4><span class="es">Cómo lo hacemos</span><span class="en">How we do it</span></h4>
+            <p><span class="es">Cada colaborador en nuestra red ha trabajado con nosotros antes. Conocemos sus fortalezas, su estilo de comunicación y la calidad de su trabajo. Sin currículums, sin suposiciones, sin riesgo.</span><span class="en">Every collaborator in our network has worked with us before. We know their strengths, their communication style, and the quality of their work. No resumes, no guesswork, no risk.</span></p>
+            <span class="flip-hint es">↩ Volver</span>
+            <span class="flip-hint en">↩ Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="flip-wrap rv d3" tabindex="0" role="button" aria-label="Scales with you — tap to flip">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="ci" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M2 10 L6 6 L10 8 L16 3" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 3 L16 3 L16 7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4><span class="es">Escala contigo</span><span class="en">Scales with you</span></h4>
+            <p><span class="es">Empezamos ligeros y crecemos a personal dedicado cuando el proyecto lo pide.</span><span class="en">We start lean and grow to dedicated staff when the project calls for it.</span></p>
+            <span class="flip-hint es">Toca para saber más ↩</span>
+            <span class="flip-hint en">Tap to learn more ↩</span>
+          </div>
+          <div class="flip-back">
+            <h4><span class="es">Cómo lo hacemos</span><span class="en">How we do it</span></h4>
+            <p><span class="es">Empezamos con el equipo más pequeño que el trabajo requiere. A medida que el alcance crece, sumamos desde nuestra red — más capacidad sin costos de contratación, onboarding ni gestión extra.</span><span class="en">We start with the smallest team the work requires. As scope grows, we expand from our network — more capacity without hiring costs, onboarding delays, or management overhead.</span></p>
+            <span class="flip-hint es">↩ Volver</span>
+            <span class="flip-hint en">↩ Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="flip-wrap rv d4" tabindex="0" role="button" aria-label="Enterprise experience — tap to flip">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="ci" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="3" y="3" width="12" height="12" rx="2" stroke="#A78BFA" stroke-width="1.5"/>
+                <path d="M6 9 L8 11 L12 7" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h4><span class="es">Experiencia empresarial</span><span class="en">Enterprise experience</span></h4>
+            <p><span class="es">Estandares aprendidos en entornos de alto nivel, aplicados a tu negocio.</span><span class="en">Standards learned in high stakes environments, applied to your business.</span></p>
+            <span class="flip-hint es">Toca para saber más ↩</span>
+            <span class="flip-hint en">Tap to learn more ↩</span>
+          </div>
+          <div class="flip-back">
+            <h4><span class="es">Cómo lo hacemos</span><span class="en">How we do it</span></h4>
+            <p><span class="es">Nuestros líderes han desplegado sistemas en producción en Citi, Centene y otros entornos donde la confiabilidad no es opcional. Traemos esos estándares de ingeniería a cada proyecto.</span><span class="en">Our leads have shipped production systems at Citi, Centene, and other environments where reliability isn't optional. We bring those engineering and compliance standards to every engagement.</span></p>
+            <span class="flip-hint es">↩ Volver</span>
+            <span class="flip-hint en">↩ Back</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="ctaw" id="cta" data-screen-label="Final CTA">
+  <div class="ctag" aria-hidden="true"></div>
+  <div class="w">
+    <h2 class="rv">
+      <span class="es">Hablemos de lo que quieres construir.</span>
+      <span class="en">Let us talk about what you want to build.</span>
+    </h2>
+    <p class="rv d1">
+      <span class="es">Una llamada corta es suficiente para saber si encajamos. Sin compromiso, sin libreto de ventas.</span>
+      <span class="en">A short call is enough to know if we are a fit. No pressure, no sales script.</span>
+    </p>
+    <a href="https://calendly.com/jmartinez-mercadeoracional/15-minute-chat" class="btn lg rv d2" target="_blank" rel="noopener">
+      <span class="es">Agenda una llamada</span>
+      <span class="en" data-comment-anchor="3dca6753ff-span">Book a call</span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="w">
+    <div class="fg">
+      <div class="fb">
+        <a href="#" class="logo" aria-label="Mercadeo Racional">
+          <svg id="logoSvgFooter" width="30" height="27" viewBox="0 0 34 30" fill="none" aria-hidden="true"><defs><linearGradient id="lgF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs><rect x="2" y="0" width="30" height="30" rx="8" fill="url(#lgF)"/><path d="M10 22 L10 9 L17 17 L24 9 L24 22" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <span class="wm">Mercadeo Racional</span>
+        </a>
+        <p class="es">Ingeniería y marketing, bajo un mismo techo.</p>
+        <p class="en">Engineering and marketing, under one roof.</p>
+      </div>
+      <div class="fc">
+        <h5><span class="es">Navegación</span><span class="en">Navigation</span></h5>
+        <ul>
+          <li><a href="#edge"><span class="es">Ventaja</span><span class="en">Why Us</span></a></li>
+          <li><a href="#software">Software</a></li>
+          <li><a href="#marketing">Marketing</a></li>
+          <li><a href="#work"><span class="es">Trabajo</span><span class="en">Work</span></a></li>
+          <li><a href="#team"><span class="es">Equipo</span><span class="en">Team</span></a></li>
+        </ul>
+      </div>
+      <div class="fc">
+        <h5><span class="es">Escribenos</span><span class="en">Get in touch</span></h5>
+        <a href="https://calendly.com/jmartinez-mercadeoracional/15-minute-chat" class="btn" target="_blank" rel="noopener" style="margin-bottom:20px; display:inline-flex;">
+          <span class="es">Agenda una llamada</span>
+          <span class="en">Book a call</span>
+        </a>
+        <p style="font-size:.75rem;color:rgba(161,161,170,.4);margin-top:4px;margin-bottom:6px;">Email</p>
+        <a href="mailto:info@mercadeoracional.com" class="feml" data-comment-anchor="f5895e5d3b-a">info@mercadeoracional.com</a>
+      </div>
+    </div>
+    <div class="fbot">
+      <p>
+        <span class="es">Disenado y construido por Mercadeo Racional.</span>
+        <span class="en">Designed and built by Mercadeo Racional.</span>
+      </p>
+      <div class="fbr">
+        <button class="lbtn" id="langBtnFooter" aria-label="Switch language">
+          <span class="es">EN</span>
+          <span class="en">ES</span>
+        </button>
+        <p>© 2026</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var KEY = 'mr_lang';
+
+  function getLang() {
+    var stored = sessionStorage.getItem(KEY);
+    if (stored) return stored;
+    return (navigator.language || '').startsWith('es') ? 'es' : 'en';
+  }
+
+  function setLang(lang) {
+    var html = document.documentElement;
+    html.setAttribute('data-lang', lang);
+    html.setAttribute('lang', lang);
+    sessionStorage.setItem(KEY, lang);
+    var label = lang === 'es' ? 'Switch to English' : 'Cambiar a español';
+    document.querySelectorAll('.lbtn').forEach(function(btn) {
+      btn.setAttribute('aria-label', label);
+    });
+  }
+
+  setLang(getLang());
+
+  document.querySelectorAll('.lbtn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var cur = document.documentElement.getAttribute('data-lang');
+      setLang(cur === 'es' ? 'en' : 'es');
+    });
+  });
+
+  // Sticky nav
+  var navEl = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    navEl.classList.toggle('stuck', window.scrollY > 40);
+  }, { passive: true });
+
+  // Scroll reveal
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rv').forEach(function(el) {
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el) {
+      el.classList.add('on');
+    });
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        var offset = 80;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Flip cards — click or keyboard to flip
+  document.querySelectorAll('.flip-wrap').forEach(function(card) {
+    card.addEventListener('click', function() {
+      this.classList.toggle('flipped');
+    });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.classList.toggle('flipped');
+      }
+    });
+  });
+
+  // Expandable tiers
+  document.querySelectorAll('.tier-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tier = this.closest('.tier');
+      var isOpen = tier.classList.contains('open');
+      tier.classList.toggle('open', !isOpen);
+      this.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+
+  // Engineering / Marketing split slider
+  (function() {
+    var slider = document.querySelector('.split-slider');
+    if (!slider) return;
+    var engEl = slider.querySelector('.ss-eng');
+    var mktEl = slider.querySelector('.ss-mkt');
+    var divEl = slider.querySelector('.ss-div');
+    var knob  = slider.querySelector('.ss-knob');
+    var engWords = engEl.querySelector('.ss-words');
+    var mktWords = mktEl.querySelector('.ss-words');
+    var dragging = false;
+
+    function setPct(clientX) {
+      var rect = slider.getBoundingClientRect();
+      var pct  = Math.max(8, Math.min(92, ((clientX - rect.left) / rect.width) * 100));
+      engEl.style.clipPath = 'inset(0 ' + (100 - pct).toFixed(1) + '% 0 0)';
+      mktEl.style.clipPath = 'inset(0 0 0 ' + pct.toFixed(1) + '%)';
+      divEl.style.left = pct + '%';
+      knob.style.left  = pct + '%';
+      if (engWords) engWords.classList.toggle('in', pct >= 57);
+      if (mktWords) mktWords.classList.toggle('in', pct <= 43);
+    }
+
+    slider.addEventListener('mousedown', function(e) { dragging = true; setPct(e.clientX); e.preventDefault(); });
+    window.addEventListener('mousemove', function(e) { if (dragging) setPct(e.clientX); });
+    window.addEventListener('mouseup',   function()  { dragging = false; });
+    slider.addEventListener('touchstart', function(e) { dragging = true; setPct(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchmove',  function(e) { if (dragging) setPct(e.touches[0].clientX); },  { passive: true });
+    window.addEventListener('touchend',   function()  { dragging = false; });
+  })();
+
+})();
+</script>
+</body>
+</html>
